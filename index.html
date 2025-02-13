@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ucapan Valentine untuk Orizasativa</title>
+  <!-- Google Fonts: Poppins dan Dancing Script -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset dasar & styling global */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #FFC1CC, #FFB6C1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Container utama */
+    #container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    /* Section styling */
+    .section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .section.active {
+      display: flex;
+      animation: fadeIn 0.8s;
+    }
+    /* Section 7 khusus, dengan overflow dan font yang lebih kecil */
+    #section7 {
+      overflow-y: auto;
+    }
+    #section7 p {
+      font-size: 0.9rem; /* Ukuran font diperkecil */
+    }
+    .title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+    /* Tombol umum */
+    .btn {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.1);
+    }
+    /* Tombol musik */
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      z-index: 100;
+    }
+    .music-btn:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+    }
+    /* Animasi fadeIn */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Container untuk animasi hati */
+    #heart-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 50;
+    }
+    .heart {
+      position: absolute;
+      bottom: 0;
+      font-size: 24px;
+      color: rgba(255,255,255,0.8);
+      animation: floatUp linear forwards;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+    /* Styling untuk Photo Grid & Polaroid */
+    .photo-grid {
+      position: relative;
+      width: 90%;
+      height: 60%;
+      margin: 20px auto;
+    }
+    /* SVG sebagai tali (rope) yang menghubungkan foto */
+    .photo-grid .rope {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .photo-grid .rope polyline {
+      fill: none;
+      stroke: saddlebrown;
+      stroke-width: 2;
+      stroke-dasharray: 4 2;
+    }
+    .photo-grid .polaroid {
+      position: absolute;
+      width: 40%;
+      background: #fff;
+      padding: 10px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+      border-radius: 5px;
+      z-index: 2;
+    }
+    /* Posisi & sedikit rotasi untuk masing-masing foto */
+    .photo1 {
+      top: 0;
+      left: 0;
+      transform: rotate(-2deg);
+    }
+    .photo2 {
+      top: 0;
+      right: 0;
+      transform: rotate(3deg);
+    }
+    .photo3 {
+      bottom: 0;
+      left: 0;
+      transform: rotate(2deg);
+    }
+    .photo4 {
+      bottom: 0;
+      right: 0;
+      transform: rotate(-3deg);
+    }
+    .polaroid img {
+      width: 100%;
+      display: block;
+      border-radius: 5px;
+    }
+    .polaroid .caption {
+      font-size: 1rem;
+      color: #333;
+      padding-top: 10px;
+    }
+    /* Popup Modal Styles */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+    }
+    .popup-content {
+      background: #fff;
+      color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Section 1: Selamat Datang -->
+    <section id="section1" class="section active">
+      <h1 class="title">Happy Valentine's Day</h1>
+      <h2 class="subtitle">Untuk Orizasativa Rencana Indah Simamora</h2>
+      <p>Selamat datang sayangkuuuuu, semoga kamu suka buatanku ini ya sayang. Maaf juga kalau engga mewah, muachhhhh</p>
+      <button id="btn-1" class="btn">Mulai</button>
+    </section>
+
+    <!-- Section 2: Awal Mula -->
+    <section id="section2" class="section">
+      <h1 class="title">Awal Mula</h1>
+      <p>Semua bermula dari obrolan santai yang mengalir tanpa terasa. Aku langsung merasa nyaman ketika mengenalmu, meski hanya lewat layar. Rasanya seperti menemukan teman sejati yang akhirnya tumbuh menjadi cinta.</p>
+      <button id="btn-2" class="btn">Lanjut</button>
+    </section>
+
+    <!-- Section 3: Cerita Kita -->
+    <section id="section3" class="section">
+      <h1 class="title">Cerita Kita</h1>
+      <p>Meskipun kita belum pernah bertemu secara langsung, setiap pesan, tawa, dan cerita yang kita bagi membuatku merasa dekat denganmu. Setiap detik di dunia maya itu selalu menyimpan kehangatan yang sulit diungkapkan.</p>
+      <button id="btn-3" class="btn">Lanjut</button>
+    </section>
+
+    <!-- Section 4: Hari Jadian -->
+    <section id="section4" class="section">
+      <h1 class="title">Hari Jadian</h1>
+      <p>Kita resmi jadian pada <strong>20 Oktober 2024</strong>. Tanggal itu selalu menjadi pengingat betapa berharganya setiap momen yang kita bagikan, meski hanya melalui dunia virtual, tapi itu sudah cukup walau masih harus menahan rindu lamanya. Tapi aku yakin suatu saat rinduku bakal terbayarkan</p>
+      <button id="btn-4" class="btn">Lanjut</button>
+    </section>
+
+    <!-- Section 5: Harapan & Impian -->
+    <section id="section5" class="section">
+      <h1 class="title">Harapan & Impian</h1>
+      <p>Walaupun jarak dan waktu memisahkan, aku selalu berharap kita bisa segera bertemu dan membuktikan bahwa cinta ini nyata. Impian untuk saling memeluk dan melihat senyum bahagiamu selalu ada di benakku.</p>
+      <button id="btn-5" class="btn">Lanjut</button>
+    </section>
+
+    <!-- Section 6: Foto Kenangan (4 Foto dengan Tali) -->
+    <section id="section6" class="section">
+      <h1 class="title">Foto Kenangan</h1>
+      <div class="photo-grid">
+        <!-- SVG sebagai tali yang menghubungkan foto -->
+        <svg class="rope" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline points="25,25 75,25 75,75 25,75 25,25" />
+        </svg>
+        <!-- Foto 1 -->
+        <div class="polaroid photo1">
+          <img src="kenangan (1).jpeg" alt="Foto 1" />
+          <div class="caption"></div>
+        </div>
+        <!-- Foto 2 -->
+        <div class="polaroid photo2">
+          <img src="kenangan (2).jpeg" alt="Foto 2" />
+          <div class="caption"></div>
+        </div>
+        <!-- Foto 3 -->
+        <div class="polaroid photo3">
+          <img src="kenangan (3).jpeg" alt="Foto 3" />
+          <div class="caption"></div>
+        </div>
+        <!-- Foto 4 -->
+        <div class="polaroid photo4">
+          <img src="kenangan (4).jpeg" alt="Foto 4" />
+          <div class="caption"></div>
+        </div>
+      </div>
+      <button id="btn-6" class="btn">Lanjut</button>
+    </section>
+
+    <!-- Section 7: Pesan Spesial (Scroll-able) -->
+    <section id="section7" class="section">
+      <h1 class="title">Pesan Spesial</h1>
+      <p>
+        Sayangkuuu, Sebelumnya aku mau minta maaf, maaf jika valentine kita tidak mewah, tidak ada coklat ataupun hadiah, hanya ini yang bisa kuberikan, semua kode ini aku buat sepenuh hati untukmu, sekali lagi maaf ya tidak mewah. 
+        Sayang, semua hal yang kita lewati belum seberapa, bakal ada lebih banyak rintangan di dalam ini, aku ingin kamu bisa selalu bersamaku, di saat susah maupun senang. 
+        Aku ingin sekali membahagiakanmu, aku selalu ingin itu, aku juga rindu sekali kepadamu, aku ingin peluk kamuuu, ingin berjumpa denganmu. 
+        Sayangg, aku bahagia sekali bertemu kamu, kamu adalah anugrah terindah yang Tuhan berikan kepadaku, aku tidak akan menyia-nyiakanmu dan aku harap kamu juga berpikir seperti itu. 
+        Sayangg, aku harap kita selamanya, semua hal yang kita jalani juga tidak sia-sia, aku sayang banget sama kamu, I LOVE YOU SO MUCHHHH SAYANGKUUU, makasihh ya hadir dihipku, aku bangga banget punya kamuuu, Muachhhhhhh
+      </p>
+      <button id="btn-7" class="btn">Love You Moreee</button>
+    </section>
+  </div>
+
+  <!-- Tombol Musik (floating) -->
+  <button id="music-toggle" class="music-btn">Pause Music</button>
+  <!-- Audio Background Music dengan autoplay -->
+  <audio id="bg-music" loop autoplay>
+    <source src="Perfect.mp3" type="audio/mpeg" />
+    Browser Anda tidak mendukung elemen audio.
+  </audio>
+
+  <!-- Container untuk animasi hati -->
+  <div id="heart-container"></div>
+
+  <!-- Popup Modal -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <p>Sayang, aku selalu berjanji untuk mencintaimu lebih dari apapun. Terima kasih sudah membuat hidupku lebih berwarna. Love You More!</p>
+      <button id="close-popup" class="btn">Tutup</button>
+    </div>
+  </div>
+
+  <script>
+    // Atur volume musik menjadi 30%
+    const bgMusic = document.getElementById('bg-music');
+    bgMusic.volume = 0.3;
+
+    /* Navigasi antar section */
+    const sections = document.querySelectorAll('.section');
+    function showSection(id) {
+      sections.forEach(sec => {
+        if (sec.id === id) {
+          sec.classList.add('active');
+        } else {
+          sec.classList.remove('active');
+        }
+      });
+    }
+
+    // Navigasi menggunakan tombol
+    document.getElementById('btn-1').addEventListener('click', () => {
+      showSection('section2');
+    });
+    document.getElementById('btn-2').addEventListener('click', () => {
+      showSection('section3');
+    });
+    document.getElementById('btn-3').addEventListener('click', () => {
+      showSection('section4');
+    });
+    document.getElementById('btn-4').addEventListener('click', () => {
+      showSection('section5');
+    });
+    document.getElementById('btn-5').addEventListener('click', () => {
+      showSection('section6'); // Menuju ke section foto kenangan
+    });
+    document.getElementById('btn-6').addEventListener('click', () => {
+      showSection('section7'); // Pesan Spesial
+    });
+    // Button di section 7 untuk menampilkan popup
+    document.getElementById('btn-7').addEventListener('click', () => {
+      document.getElementById('popup').style.display = 'flex';
+    });
+
+    // Tombol Musik: toggle play/pause
+    document.getElementById('music-toggle').addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        document.getElementById('music-toggle').innerText = "Pause Music";
+      } else {
+        bgMusic.pause();
+        document.getElementById('music-toggle').innerText = "Play Music";
+      }
+    });
+
+    // Tutup popup
+    document.getElementById('close-popup').addEventListener('click', () => {
+      document.getElementById('popup').style.display = 'none';
+    });
+
+    /* Animasi Hati Interaktif */
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerText = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 3 + Math.random() * 2 + 's';
+      document.getElementById('heart-container').appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+    setInterval(createHeart, 800);
+  </script>
+</body>
+</html>
